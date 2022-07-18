@@ -1,6 +1,6 @@
 @{
    RootModule        = 'bypassEmailProxyRules.psm1'
-   ModuleVersion     = '0.2'
+   ModuleVersion     = '0.3'
    FunctionsToExport = @(
      'format-saveEmailProxyExtension'         ,
      'format-unsaveEmailProxyExtension'       ,

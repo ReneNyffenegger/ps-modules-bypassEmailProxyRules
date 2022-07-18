@@ -1,3 +1,5 @@
+# V0.3
+
 set-strictMode -version latest
 
 function format-saveEmailProxyExtension {

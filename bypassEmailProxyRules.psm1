@@ -70,3 +70,42 @@ function expand-bypassEmailProxyRulesZipArchive {
 
    close-zipArchive $zip
 }
+
+function format-bypassEmailProxyRulesFile {
+   param (
+      [parameter(valueFromPipeline = $true, mandatory = $true)]
+      [string]               $filename,
+      [parameter()]
+      [System.Text.Encoding] $encoding = (new-object System.Text.UTF8Encoding $false)
+   )
+
+   process {
+
+      $text       = [System.IO.File]::ReadAllText($ExecutionContext.SessionState.Path.GetResolvedPSPathFromPSPath($filename), $encoding)
+      [string] $r = ''
+
+      foreach ($c in $text.ToCharArray()) {
+
+          [int] $n = $c
+
+          if ($encoding.IsSingleByte) {
+
+             $start = 0xb0 # 176
+
+             if     ( $n -ge      48 -and  $n -le      57   ) { $r += [char] ($n + $start - 48) }
+             elseif ( $n -ge  $start -and  $n -le  $start+9 ) { $r += [char] ($n - $start + 48) }
+             else                                             { $r += $c                        }
+
+          }
+          else {
+
+            if     ( $n -ge   48 -and  $n -le   57 ) { $r += [char] ($n + 8256) }
+            elseif ( $n -ge 8304 -and  $n -le 8313 ) { $r += [char] ($n - 8256) }
+            else                                     { $r += $c                 }
+          }
+
+      }
+
+      [System.IO.File]::WriteAllText($ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath("$filename.out"), $r, $encoding)
+   }
+}

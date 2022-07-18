@@ -5,6 +5,7 @@
      'format-saveEmailProxyExtension'         ,
      'format-unsaveEmailProxyExtension'       ,
      'new-bypassEmailProxyRulesZipArchive'    ,
-     'expand-bypassEmailProxyRulesZipArchive'
+     'expand-bypassEmailProxyRulesZipArchive' ,
+     'format-bypassEmailProxyRulesFile'
    )
 }
